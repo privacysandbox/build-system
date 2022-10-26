@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.1.0...release-0.2.0) (2022-10-26)
+
+
+### Features
+
+* Add bazel support to register container-based python toolchain
+* Add docker uri env var as override
+* Add tools/terraform
+* Use image etc files in workspace root
+
+
+### Bug Fixes
+
+* Avoid empty tar error if no workspace etc files
+
+
+### Documentation
+
+* Add Getting Started section to README.md
+
 ## 0.1.0 (2022-10-25)
 
 

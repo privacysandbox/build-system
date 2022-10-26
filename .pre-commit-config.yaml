@@ -82,22 +82,22 @@ repos:
     types_or:
     - text
 
-#  - id: terraform-fmt
-#    name: terraform fmt
-#    description: Run terraform via docker to format Terraform files
-#    language: script
-#    pass_filenames: false
-#    entry: builders/tools/terraform fmt -write=true -recursive
-#    types_or:
-#    - terraform
+  - id: terraform-fmt
+    name: terraform fmt
+    description: Run terraform via docker to format Terraform files
+    language: script
+    pass_filenames: false
+    entry: tools/terraform fmt -write=true -recursive
+    types_or:
+    - terraform
 
-#  - id: hadolint
-#    name: Lint Dockerfiles
-#    description: Run hadolint via docker to lint Dockerfiles
-#    language: script
-#    types_or:
-#    - dockerfile
-#    entry: builders/tools/hadolint
+  - id: hadolint
+    name: Lint Dockerfiles
+    description: Run hadolint via docker to lint Dockerfiles
+    language: script
+    types_or:
+    - dockerfile
+    entry: tools/hadolint
 
 - repo: https://github.com/pre-commit/mirrors-prettier
   rev: v2.7.1
