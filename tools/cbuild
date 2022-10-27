@@ -50,8 +50,9 @@ USAGE
     --verbose                  Enable verbose output
 
 Environment variables (all optional):
-    WORKSPACE                    Full path to the workspace (repo root)
-    EXTRA_DOCKER_RUN_ARGS        Additional arguments to pass to docker run invocations
+    WORKSPACE                  Full path to the workspace (repo root)
+    EXTRA_DOCKER_RUN_ARGS      Additional arguments to pass to docker run invocations
+    CBUILD_IMAGE               docker URI to the specific image to run
 
 Environment variables propagated into container:
     BAZEL_STARTUP_ARGS
@@ -126,7 +127,11 @@ if [[ ${VERBOSE} -eq 1 ]]; then
   printf "mounting workspace into container: %s\n" "${WORKSPACE_MOUNT}" &>/dev/stderr
 fi
 
-IMAGE_TAGGED="$("${TOOLS_DIR}"/get-builder-image-tagged --image "${IMAGE}")"
+if [[ -n ${CBUILD_IMAGE} ]]; then
+  IMAGE_TAGGED="${CBUILD_IMAGE}"
+else
+  IMAGE_TAGGED="$("${TOOLS_DIR}"/get-builder-image-tagged --image "${IMAGE}")"
+fi
 readonly IMAGE_TAGGED
 
 declare -a DOCKER_RUN_ARGS
