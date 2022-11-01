@@ -52,22 +52,19 @@ function apt_update() {
   apt-get --quiet -o 'Acquire::https::No-Cache=True' -o 'Acquire::http::No-Cache=True' update
 }
 
-function install_python() {
-  apt-get --quiet install -y python3.8-venv="3.8.10-0ubuntu1~20.04.5"
-}
-
 function install_packages() {
-  declare -a PACKAGES=(
-    lsb-release
-    apt-transport-https
-    ca-certificates
+  DEBIAN_FRONTEND=noninteractive apt-get --quiet install -y --no-install-recommends \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
+    openjdk-11-jre \
+    python3.9-venv="3.9.5-3ubuntu0~20.04.1" \
+    shellcheck \
+    software-properties-common \
     wget
-    curl
-    gnupg
-    software-properties-common
-    shellcheck
-  )
-  DEBIAN_FRONTEND=noninteractive apt-get --quiet install -y "${PACKAGES[@]}"
+  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 100
 }
 
 # Install Docker (https://docs.docker.com/engine/install/debian/)
@@ -82,7 +79,7 @@ function install_docker() {
 }
 
 function install_precommit_cache() {
-  python3 -m venv "${PRE_COMMIT_VENV_DIR}"
+  /usr/bin/python3.9 -m venv "${PRE_COMMIT_VENV_DIR}"
   "${PRE_COMMIT_VENV_DIR}"/bin/pip install pre-commit
   "${PRE_COMMIT_TOOL}" --version
 
@@ -99,6 +96,13 @@ function install_precommit_cache() {
   rm -rf "${GIT_REPO}"
 }
 
+function clean_debian() {
+  apt-get --quiet autoremove -y
+  apt-get autoclean
+  apt-get clean
+  rm -rf /var/lib/apt/lists
+}
+
 if [[ ${VERBOSE} -eq 1 ]]; then
   printf "=== SHELL ENVIRONMENT ===\n"
   env
@@ -108,15 +112,12 @@ ARCH=$(dpkg --print-architecture)
 readonly ARCH
 
 apt_update
-install_python
 install_packages
 
 # shellcheck disable=SC1090
 . "${SCRIPT_DIR}"/install_go.sh
+# golang is used to compile go-based hooks
 install_golang "${ARCH}"
 install_docker
 install_precommit_cache
-remove_golang
-
-apt-get --quiet autoremove -y
-apt-get clean
+clean_debian

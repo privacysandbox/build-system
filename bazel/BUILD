@@ -17,9 +17,8 @@
 load("@bazel_tools//tools/python:toolchain.bzl", "py_runtime_pair")
 load("@rules_python//python:defs.bzl", "py_runtime")
 
-# define the python3 runtime.
-# this must match the python path in the build container
-PY3_PATH = "/usr/bin/python3.8"
+# define the python3 runtime; this path must exist in the bazel build environment
+PY3_PATH = "/opt/bin/python3"
 
 py_runtime(
     name = "py_runtime",

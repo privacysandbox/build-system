@@ -58,6 +58,13 @@ repos:
     - c++
     - c
 
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.4.0
+  hooks:
+  - id: pretty-format-java
+    name: Google Java Formatter
+    args: [--autofix]
+
 - repo: local
   hooks:
   - id: addlicense
