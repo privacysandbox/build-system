@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.3.1](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.3.0...release-0.3.1) (2022-11-01)
+
+
+### Bug Fixes
+
+* Add OpenJDK 11 in build-amazonlinux2
+
 ## [0.3.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.2.0...release-0.3.0) (2022-11-01)
 
 

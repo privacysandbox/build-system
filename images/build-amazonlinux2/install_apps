@@ -42,8 +42,11 @@ function yum_update() {
   yum -y update
 }
 
-function install_python() {
-  amazon-linux-extras install -y python3.8
+function install_compilers() {
+  amazon-linux-extras install -y \
+    python3.8 \
+    java-openjdk11
+  yum install -y java-11-openjdk-devel
   mkdir -p /opt/bin
   update-alternatives --install /opt/bin/python3 python3 /usr/bin/python3.8 100
 }
@@ -83,7 +86,7 @@ if [[ ${VERBOSE} -eq 1 ]]; then
 fi
 
 yum_update
-install_python
+install_compilers
 install_nitro
 install_misc
 install_clang

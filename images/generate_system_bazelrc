@@ -44,6 +44,7 @@ function _get_toolchains_hash() {
       # emit versions of all tools relevant to builds
       clang --version
       /opt/bin/python3 --version
+      javac --version
     } | sha256sum | cut --delimiter=" " --fields=1
 }
 
