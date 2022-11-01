@@ -23,6 +23,18 @@ set -o errexit
 VERBOSE=0
 BUILD_IMAGE_IF_NEEDED=1
 
+trap _cleanup EXIT
+function _cleanup() {
+  declare -r -i STATUS=$?
+  if [[ -n ${TEMPTAR} ]]; then
+    rm -f "${TEMPTAR}"
+  fi
+  if [[ ${STATUS} -ne 0 ]]; then
+    printf "Error: get-builder-image-tagged status code: %d\n" "${STATUS}" &>/dev/stderr
+  fi
+  exit ${STATUS}
+}
+
 declare -r -A IMAGE_NAMES=(
   [build-debian]="privacysandbox/builders/build-debian"
   [build-amazonlinux2]="privacysandbox/builders/build-amazonlinux2"
@@ -31,9 +43,9 @@ declare -r -A IMAGE_NAMES=(
   [utils]="privacysandbox/builders/utils"
 )
 
-usage() {
+function usage() {
   declare -r -i exitval=${1-1}
-  cat &>/dev/stderr << USAGE
+  cat &>/dev/stderr <<USAGE
 usage:
   $0 <options>
     --no-build           Do not build image if it doesn't exist
@@ -48,7 +60,7 @@ USAGE
     printf "                             *  %s%s\n" "${elem}" "${EXTRA}" &>/dev/stderr
   done
 
-  cat &>/dev/stderr << USAGE
+  cat &>/dev/stderr <<USAGE
     --verbose            Enable verbose output
 USAGE
   # shellcheck disable=SC2086
@@ -103,14 +115,6 @@ if ! [[ -s ${IMAGE_PATH_FULL}/Dockerfile ]]; then
 fi
 TEMPTAR="$(mktemp --dry-run --suffix=.tar.gz)"
 readonly TEMPTAR
-
-trap _cleanup EXIT
-
-function _cleanup() {
-  declare -r -i STATUS=$?
-  rm -f "${TEMPTAR}"
-  exit ${STATUS}
-}
 
 # Try to create a deterministic tar file for the specified file path
 # Any etc files in the $WORKSPACE (root) directory override the etc

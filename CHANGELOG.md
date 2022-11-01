@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.2.0...release-0.3.0) (2022-11-01)
+
+
+### Features
+
+* Add git to build-amazonlinux2 image
+* Add google-java-format pre-commit hook
+* Add OpenJDK 11
+* Move python3 to /opt/bin/python3
+
+
+### Bug Fixes
+
+* Ensure builder::set_workspace does not overwrite WORKSPACE
+
 ## [0.2.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.1.0...release-0.2.0) (2022-10-26)
 
 

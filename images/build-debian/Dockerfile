@@ -35,4 +35,4 @@ RUN \
   /scripts/install_golang_apps && \
   rm -rf /scripts
 
-ENV PATH="${PATH}:/usr/local/go/bin"
+ENV PATH="${PATH}:/usr/local/go/bin:/opt/bin"

@@ -16,15 +16,17 @@ FROM amazonlinux:2.0.20220912.1
 
 COPY /install_apps install_golang_apps install_go.sh generate_system_bazelrc .bazelversion /scripts/
 COPY get_workspace_mount /usr/local/bin
+COPY gitconfig /etc
 
 ARG TARGETARCH
 ENV BUILD_ARCH="${TARGETARCH}" \
     WORKSPACE=/src/workspace
 
 RUN  \
+  chmod 644 /etc/gitconfig && \
   /scripts/install_apps && \
   /scripts/generate_system_bazelrc --user-root-name amazonlinux2 && \
   /scripts/install_golang_apps && \
   rm -rf /scripts
 
-ENV PATH="${PATH}:/usr/local/go/bin"
+ENV PATH="${PATH}:/usr/local/go/bin:/opt/bin"

@@ -28,13 +28,16 @@ fi
 # overwrite existing WORKSPACE value.
 #######################################
 function builder::set_workspace() {
+  export WORKSPACE
+  if [[ -n ${WORKSPACE} ]]; then
+    return
+  fi
   local GIT_TOPLEVEL="$(git rev-parse --show-superproject-working-tree)"
   if [[ -n ${GIT_TOPLEVEL} ]]; then
     WORKSPACE="${GIT_TOPLEVEL}"
-  elif [[ -z ${WORKSPACE} ]]; then
+  else
     WORKSPACE="$(git rev-parse --show-toplevel)"
   fi
-  export WORKSPACE
 }
 
 #######################################

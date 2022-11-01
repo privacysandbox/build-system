@@ -58,8 +58,8 @@ function __exit_msg() {
 
 function __install_git_hooks() {
   git rev-parse --is-inside-work-tree >/dev/null || __exit_msg "Not in a git repository"
-  GIT_HOOKS_SRC_DIR="${TOOLS_DIR}/git-hooks"
-  GIT_HOOKS_DIR="${WORKSPACE}/.git/hooks"
+  declare -r GIT_HOOKS_SRC_DIR="${TOOLS_DIR}/git-hooks"
+  declare -r GIT_HOOKS_DIR="${WORKSPACE}/.git/hooks"
   chmod +x "${GIT_HOOKS_SRC_DIR}"
   cp -p "${GIT_HOOKS_SRC_DIR}"/* "${GIT_HOOKS_DIR}"
   printf "installed git hooks\n"
