@@ -22,6 +22,7 @@ ARG LOCALE=en_US.UTF-8
 ARG TARGETARCH
 ENV BUILD_ARCH="${TARGETARCH}" \
     WORKSPACE=/src/workspace \
+    CC=clang \
     TZ=Etc/UTC \
     LANG=${LOCALE} \
     LANGUAGE=${LOCALE} \

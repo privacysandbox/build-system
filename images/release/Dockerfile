@@ -12,7 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+FROM golang:1.19.3-alpine3.16 AS golang-1.19
 FROM node:18.9.0-alpine3.16
+
+COPY --from=golang-1.19 /usr/local/go/ /usr/local/go/
+ENV PATH="${PATH}:/usr/local/go/bin"
 
 COPY install_release_apps /scripts/
 COPY gitconfig /etc

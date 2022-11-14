@@ -42,6 +42,8 @@ fi
 function _get_toolchains_hash() {
     {
       # emit versions of all tools relevant to builds
+      uname --machine
+      cat /etc/os-release
       clang --version
       /opt/bin/python3 --version
       javac --version
