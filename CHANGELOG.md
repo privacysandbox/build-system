@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.3.1...release-0.4.0) (2022-11-14)
+
+
+### Features
+
+* Add buildozer to release image
+* Add grpcurl helper script
+* Substitute variables in EXTRA_DOCKER_RUN_ARGS
+* Use specific version of GNU tar
+
+
+### Bug Fixes
+
+* Add /opt/bin/python link
+* Add CC=clang env var
+* Add xz to build-debian
+* Explicitly add machine type and OS release to toolchains hash
+
 ### [0.3.1](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.3.0...release-0.3.1) (2022-11-01)
 
 

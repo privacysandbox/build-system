@@ -123,6 +123,7 @@ source "${TOOLS_DIR}"/builder.sh
 
 WORKSPACE_MOUNT="$(builder::get_docker_workspace_mount)"
 readonly WORKSPACE_MOUNT
+export WORKSPACE_MOUNT
 if [[ ${VERBOSE} -eq 1 ]]; then
   printf "mounting workspace into container: %s\n" "${WORKSPACE_MOUNT}" &>/dev/stderr
 fi
@@ -140,7 +141,7 @@ DOCKER_RUN_ARGS+=(
   "--entrypoint=/bin/bash"
   "--volume ${WORKSPACE_MOUNT}:/src/workspace"
   "--workdir /src/workspace"
-  "${EXTRA_DOCKER_RUN_ARGS}"
+  "$(echo "${EXTRA_DOCKER_RUN_ARGS}" | envsubst)"
 )
 
 # inside the docker build images, /bazel_root is the bazel cache dir, per the system-wide bazelrc

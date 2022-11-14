@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM amazonlinux:2.0.20220912.1
+set -o errexit
 
-COPY /install_apps install_golang_apps install_go.sh generate_system_bazelrc .bazelversion /scripts/
-COPY get_workspace_mount /usr/local/bin
-COPY gitconfig /etc
+TOOLS_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+readonly TOOLS_DIR
+if [[ -z ${RELEASE_IMAGE} ]]; then
+  RELEASE_IMAGE="$("${TOOLS_DIR}"/get-builder-image-tagged --image release)"
+  readonly RELEASE_IMAGE
+fi
 
-ARG TARGETARCH
-ENV BUILD_ARCH="${TARGETARCH}" \
-    WORKSPACE=/src/workspace \
-    CC=clang
-
-RUN  \
-  chmod 644 /etc/gitconfig && \
-  /scripts/install_apps && \
-  /scripts/generate_system_bazelrc --user-root-name amazonlinux2 && \
-  /scripts/install_golang_apps && \
-  rm -rf /scripts
-
-ENV PATH="${PATH}:/usr/local/go/bin:/opt/bin"
+docker run -i --rm --entrypoint=buildozer "${RELEASE_IMAGE}" "$@"
