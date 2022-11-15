@@ -138,7 +138,7 @@ function tar_cp() {
   local -r DEST="$3"
 
   local -r TAR_IMAGE="$(tar_image)"
-  docker run --rm --interactive \
+  docker run --rm \
     --entrypoint=/bin/sh \
     --volume "${WORKSPACE_MOUNT}:${WORKSPACE_MOUNT}" \
     --volume "${DEST}:${DEST}" \
@@ -173,7 +173,7 @@ function _create_tar() {
   local -r TAR_IMAGE="$(tar_image)"
   # create a deterministic tarball of the collected files
   touch "${TARFILE}"
-  docker run --rm --interactive \
+  docker run --rm \
     --entrypoint=/bin/sh \
     --volume "${TMP_IMAGE_DIR}:${TMP_IMAGE_DIR}" \
     --volume "${TARFILE}:${TARFILE}" \
