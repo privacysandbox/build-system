@@ -69,8 +69,7 @@ function builder::get_docker_workspace_mount() {
       {{end -}}
     {{end -}}
   '
-  # shellcheck disable=SC2155
-  declare -r MOUNT_PATH="$(docker inspect --format "${FORMAT_STR}" "${CONTAINER_ID}")"
+  local -r MOUNT_PATH="$(docker inspect --format "${FORMAT_STR}" "${CONTAINER_ID}")"
   if [[ -z ${MOUNT_PATH} ]]; then
     printf "Error: Unable to determine mount point for /src/workspace. Exiting\n" &>/dev/stderr
     exit 1
@@ -123,7 +122,6 @@ function builder::cbuild_al2() {
   do
     env_args+=("--env" "${evar}")
   done
-  set -o xtrace
   printf "=== cbuild amazonlinux2 action envs ===\n"
   # shellcheck disable=SC2086
   "${CBUILD}" ${CBUILD_ARGS} "${env_args[@]}" --image build-amazonlinux2 --cmd "grep -o 'action_env.*' /etc/bazel.bazelrc 1>/dev/stderr 2>/dev/null"
