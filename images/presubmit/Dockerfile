@@ -27,7 +27,7 @@ ENV BUILD_ARCH="${TARGETARCH}" \
 
 RUN  \
   chmod 644 /etc/gitconfig && \
-  /usr/bin/env -v PRE_COMMIT_VENV_DIR=${PRE_COMMIT_VENV_DIR} /scripts/install_apps --verbose && \
+  /usr/bin/env -v PRE_COMMIT_VENV_DIR=${PRE_COMMIT_VENV_DIR} /scripts/install_apps && \
   rm -rf /scripts
 
 ENV PATH="${PATH}:/usr/local/go/bin"

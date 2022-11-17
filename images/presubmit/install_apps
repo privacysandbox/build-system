@@ -88,11 +88,13 @@ function install_precommit_cache() {
   readonly GIT_REPO
   git init "${GIT_REPO}"
   cd "${GIT_REPO}"
-  # create a placeholder terraform file in the git repo, giving addlicense something to do
-  echo "# a placeholder file for addlicense" > placeholder.tf
-  git add placeholder.tf
-  # run a single arbitrary hook to trigger population of cache
-  "${PRE_COMMIT_TOOL}" run --config "${SCRIPT_DIR}"/.pre-commit-config.yaml || true
+  # run pre-commit with no files in scope to only trigger population of the cache
+  {
+    cat "${SCRIPT_DIR}"/.pre-commit-config.yaml
+    printf "\nfiles: ^$\n"
+  } > .pre-commit-config.yaml
+  git add .pre-commit-config.yaml
+  "${PRE_COMMIT_TOOL}" run --config .pre-commit-config.yaml || true
   rm -rf "${GIT_REPO}"
 }
 
