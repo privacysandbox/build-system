@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.4.3](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.4.2...release-0.4.3) (2022-11-17)
+
+
+### Bug Fixes
+
+* Add gettext package for envsubst
+* Avoid yum package version strings specific to CPU architecture
+* Improve verbose output for get-builder-image-tagged
+* Pin apt and yum package versions
+
 ### [0.4.2](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.4.1...release-0.4.2) (2022-11-17)
 
 
