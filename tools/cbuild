@@ -129,9 +129,9 @@ if [[ ${VERBOSE} -eq 1 ]]; then
 fi
 
 if [[ -n ${CBUILD_IMAGE} ]]; then
-  IMAGE_TAGGED="${CBUILD_IMAGE}"
+  IMAGE_TAGGED=${CBUILD_IMAGE}
 else
-  IMAGE_TAGGED="$("${TOOLS_DIR}"/get-builder-image-tagged --image "${IMAGE}")"
+  IMAGE_TAGGED=$("${TOOLS_DIR}"/get-builder-image-tagged --image "${IMAGE}")
 fi
 readonly IMAGE_TAGGED
 
@@ -183,11 +183,11 @@ if [[ -z ${CMD} ]]; then
   # shellcheck disable=SC2068
   docker run \
     ${DOCKER_RUN_ARGS[@]} \
-    "${IMAGE_TAGGED}"
+    ${IMAGE_TAGGED}
 else
   # shellcheck disable=SC2068
   docker run \
     ${DOCKER_RUN_ARGS[@]} \
-    "${IMAGE_TAGGED}" \
+    ${IMAGE_TAGGED} \
     --login -c "$CMD"
 fi
