@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.4.4](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.4.3...release-0.4.4) (2022-11-18)
+
+
+### Bug Fixes
+
+* Retain execute permissions when normalizing dist
+
 ### [0.4.3](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.4.2...release-0.4.3) (2022-11-17)
 
 

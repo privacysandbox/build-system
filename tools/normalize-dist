@@ -45,7 +45,8 @@ readonly TOP_LEVEL_DIRS="dist"
 printf "Setting file ownership [%s], group [%s] in dirs [%s]\n" "${USER}" "${GROUP}" "${TOP_LEVEL_DIRS}"
 "${TOOLS_DIR}"/cbuild --image ${IMAGE} --cmd "
 for TOP_LEVEL_DIR in ${TOP_LEVEL_DIRS}; do
-  find \${TOP_LEVEL_DIR} -type f -exec chmod 644 {} \;
+  find \${TOP_LEVEL_DIR} -type f ! -executable -exec chmod 644 {} \;
+  find \${TOP_LEVEL_DIR} -type f -executable -exec chmod 755 {} \;
   find \${TOP_LEVEL_DIR} -type d -exec chmod 755 {} \;
   chgrp --recursive ${GROUP} \${TOP_LEVEL_DIR}
   chown --recursive ${USER} \${TOP_LEVEL_DIR}
