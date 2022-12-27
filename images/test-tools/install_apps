@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -o errexit
+
+function install_packages() {
+  apk --no-cache add \
+    curl=7.87.0-r0
+}
+
+function install_ghz() {
+  go install github.com/bojand/ghz/cmd/ghz@v0.111.0
+  ghz --help
+}
+
+install_packages
+install_ghz
