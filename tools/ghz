@@ -13,42 +13,20 @@
 # limitations under the License.
 
 # environment variables (all optional):
-#   WORKSPACE                   repo root directory, must be an absolute path
-#   EXTRA_DOCKER_RUN_ARGS       additional arguments to pass to docker run invocations
-#
-# environment variables exported to AWS CLI
-# For more info on supported env vars, see:
-#   https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-#
-#     AWS_ACCESS_KEY_ID
-#     AWS_SECRET_ACCESS_KEY
-#     AWS_SESSION_TOKEN
-#     AWS_REGION
-#     AWS_DEFAULT_REGION
-#     AWS_PROFILE
+#   WORKSPACE                    repo root directory, must be an absolute path
 
 set -o errexit
 
 # shellcheck disable=SC1091
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"/builder.sh
-
-declare -a ENV_VARS
-builder::add_aws_env_vars ENV_VARS
-ENV_VARS+=(
-  "HOME=/home"
-)
+TOOLS_DIR="$(builder::get_tools_dir)"
+IMAGE="test-tools"
+IMAGE_TAGGED=$("${TOOLS_DIR}"/get-builder-image-tagged --image "${IMAGE}")
 
 declare -a DOCKER_RUN_ARGS
 DOCKER_RUN_ARGS+=(
   "--rm"
-  "$(echo "${EXTRA_DOCKER_RUN_ARGS}" | envsubst)"
 )
-for evar in "${ENV_VARS[@]}"
-do
-  DOCKER_RUN_ARGS+=(
-    "--env ${evar}"
-  )
-done
 if [[ -t 0 ]] && [[ -t 1 ]]; then
   # stdin and stdout are open, assume it's an interactive tty session
   DOCKER_RUN_ARGS+=(
@@ -59,12 +37,13 @@ fi
 
 REL_PWD="$(realpath --relative-to="${WORKSPACE}" "$(pwd)")"
 readonly REL_PWD
+WORKSPACE_MOUNT="$(builder::get_docker_workspace_mount)"
+readonly WORKSPACE_MOUNT
 
 # shellcheck disable=SC2068
 docker run \
   ${DOCKER_RUN_ARGS[@]} \
   --user "$(id -u):$(id -g)" \
-  --volume "${HOME}"/.aws/:/home/.aws/ \
-  --volume "${WORKSPACE}":/src/workspace \
+  --volume "${WORKSPACE_MOUNT}":/src/workspace \
   --workdir /src/workspace/"${REL_PWD}" \
-  amazon/aws-cli "$@"
+  ${IMAGE_TAGGED} ghz "$@"

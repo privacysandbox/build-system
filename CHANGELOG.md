@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.7.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.6.0...release-0.7.0) (2022-12-27)
+
+
+### Features
+
+* Add ghz wrapper script
+* Add test-tools image
+
+## [0.6.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.5.0...release-0.6.0) (2022-12-12)
+
+
+### Features
+
+* Add EXTRA_DOCKER_RUN_ARGS support in aws-cli
+
+
+### Bug Fixes
+
+* Emit docker build output only on non-zero exit
+* Remove tempfile before exiting
+
 ## [0.5.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.4.4...release-0.5.0) (2022-12-06)
 
 
