@@ -66,8 +66,7 @@ usage:
     --image              Image name for the build runtime. Valid names:
 USAGE
 
-  for elem in $(get_image_list "${IMAGES_DIR}")
-  do
+  for elem in $(get_image_list "${IMAGES_DIR}"); do
     if [[ ${IMAGE} == "${elem}" ]]; then
       local EXTRA=" (default)"
     fi

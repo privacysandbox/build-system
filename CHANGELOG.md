@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.7.0...release-0.8.0) (2022-12-29)
+
+
+### Features
+
+* Add bash and jq to test-tools image
+* Add script to normalize bazel- symlinks
+* Ensure run-tests includes all images
+* Skip symlinks that resolve in normalize-bazel-symlink
+
 ## [0.7.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.6.0...release-0.7.0) (2022-12-27)
 
 
