@@ -4,7 +4,9 @@ set -o errexit
 
 function install_packages() {
   apk --no-cache add \
-    curl=7.87.0-r0
+    bash=5.2.15-r0 \
+    curl=7.87.0-r0 \
+    jq=1.6-r2
 }
 
 function install_ghz() {
