@@ -56,7 +56,8 @@ function install_packages() {
   DEBIAN_FRONTEND=noninteractive apt-get --quiet install -y --no-install-recommends \
     apt-transport-https="2.0.9" \
     ca-certificates="20211016ubuntu0.20.04.1" \
-    curl="7.68.0-1ubuntu2.14" \
+    libcurl4="7.68.0-1ubuntu2" \
+    curl="7.68.0-1ubuntu2" \
     gnupg="2.2.19-3ubuntu2.2" \
     lsb-release="11.1.0ubuntu2" \
     openjdk-11-jre="11.0.17+8-1ubuntu2~20.04" \
