@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.9.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.8.0...release-0.9.0) (2023-01-04)
+
+
+### Features
+
+* Add zlib1g-dev to build-debian per scp build dependency
+* Update hook versions
+
+
+### Bug Fixes
+
+* Correct non-zero error message and drop sourcing of tools/builder.sh
+* Elide warnings from bazel info
+* Revert from clang-format v15 to v14
+
 ## [0.8.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.7.0...release-0.8.0) (2022-12-29)
 
 

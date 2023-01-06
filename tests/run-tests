@@ -26,7 +26,7 @@ function _cleanup() {
     rm -rf "${TMP_HASHES_DIR}"
   fi
   if [[ ${STATUS} -ne 0 ]]; then
-    printf "Error: get-builder-image-tagged status code: %d\n" "${STATUS}" &>/dev/stderr
+    printf "Error: run-tests status code: %d\n" "${STATUS}" &>/dev/stderr
   fi
   exit ${STATUS}
 }
@@ -63,8 +63,6 @@ readonly HASHES_DIR="${TESTS_DIR}"/data/hashes
 readonly IMAGES_DIR="${TESTS_DIR}"/../images
 IMAGE_LIST="$(get_image_list "${IMAGES_DIR}")"
 readonly IMAGE_LIST
-# shellcheck disable=SC1090
-source "${TOOLS_DIR}"/builder.sh
 
 # warning when running inside a docker container
 if [[ -f /.dockerenv ]]; then
