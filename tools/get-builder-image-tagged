@@ -157,6 +157,7 @@ function _tar_for_dir() {
   local -r FILE_SHA="$2"
   local -r FILEPATH="$3"
   local -r TMP_IMAGE_DIR="$(mktemp --tmpdir="${WORKSPACE}" --directory)"
+  trap "rm -rf '${TMP_IMAGE_DIR}'" RETURN
 
   WS_FILE_TAR="$(realpath "${FILE_TAR}" --relative-to="${WORKSPACE}")"
   WS_FILE_SHA="$(realpath "${FILE_SHA}" --relative-to="${WORKSPACE}")"
@@ -185,7 +186,6 @@ tar --create --dereference --sort=name --owner=0 --group=0 --numeric-owner --for
 TARLEN=\$(wc -c <'${WS_FILE_TAR}')
 { printf 'blob %d\0' \${TARLEN}; tar --extract --file='${WS_FILE_TAR}' --to-stdout; } | sha256sum | cut -f1 -d' ' >'${WS_FILE_SHA}'
 "
-  rm -rf "${TMP_IMAGE_DIR}"
 }
 
 TEMPTAR=$(mktemp --tmpdir="${WORKSPACE}" --dry-run).tar.gz
