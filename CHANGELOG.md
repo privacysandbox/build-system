@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.11.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.10.0...release-0.11.0) (2023-01-09)
+
+
+### Features
+
+* Add chrpath
+
+
+### Bug Fixes
+
+* Clean up tmpdir via RETURN trap
+
 ## [0.10.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.9.0...release-0.10.0) (2023-01-06)
 
 
