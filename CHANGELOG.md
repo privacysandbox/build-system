@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.13.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.12.0...release-0.13.0) (2023-01-23)
+
+
+### Features
+
+* Add ab tool
+* Add cassowary http load testing tool
+* Add h2load tool
+* Add slowhttptest tool
+* Adjust get-builder-image-tagged verbose output
+* Upgrade to packer v1.8.5
+
+
+### Bug Fixes
+
+* Re-pin dependencies in test-tools image
+* Relax version pins to semver
+* Upgrade amazonlinux2 base image
+* Upgrade git on amazonlinux2
+
+## [0.12.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.11.0...release-0.12.0) (2023-01-10)
+
+
+### Features
+
+* Modify ghz wrapper for generic use. Add curl
+* Use test-tools image for grpcurl
+
+## [0.11.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.10.0...release-0.11.0) (2023-01-09)
+
+
+### Features
+
+* Add chrpath
+
+
+### Bug Fixes
+
+* Clean up tmpdir via RETURN trap
+
 ## [0.10.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.9.0...release-0.10.0) (2023-01-06)
 
 
