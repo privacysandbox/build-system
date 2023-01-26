@@ -61,7 +61,7 @@ function install_misc() {
     openjdk-11-jdk="11.0.17*" \
     python3.9-venv="3.9.5-*" \
     rename="1.10-*" \
-    software-properties-common="0.99.9.8" \
+    software-properties-common="0.99.9.10" \
     unzip="6.0-*" \
     wget="1.20.3-*" \
     xz-utils="5.2.4-*" \
