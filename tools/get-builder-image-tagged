@@ -20,9 +20,6 @@
 set -o pipefail
 set -o errexit
 
-BUILD_IMAGE_IF_NEEDED=1
-DOCKER_BUILD_ARGS="--quiet"
-
 trap _cleanup EXIT
 function _cleanup() {
   declare -r -i STATUS=$?
@@ -33,11 +30,13 @@ function _cleanup() {
     rm -f "${TEMPTAR}" "${SHAFILE}"
   fi
   if [[ ${STATUS} -ne 0 ]]; then
-    if [[ -s ${BUILD_OUTPUT} ]]; then
+    if [[ -s ${BUILD_OUTPUT} ]] && [[ ${VERBOSE} -eq 1 ]]; then
       cat "${BUILD_OUTPUT}"
     fi
     printf "Error: get-builder-image-tagged status code: %d\n" ${STATUS} &>/dev/stderr
     sleep 5s
+  elif [[ -f ${BUILD_OUTPUT} ]] && [[ ${VERBOSE} -eq 0 ]]; then
+    rm -f "${BUILD_OUTPUT}"
   fi
   exit ${STATUS}
 }
@@ -67,8 +66,11 @@ function usage() {
   cat &>/dev/stderr <<USAGE
 usage:
   $0 <options>
-    --no-build     Do not build image if it doesn't exist
-    --image        Image name for the build runtime. Valid names:
+    --no-build            Do not build image if it doesn't exist
+    --image               Image name for the build runtime. Valid names:
+
+environment variables (all optional):
+    IMAGE_BUILD_VERBOSE   Capture docker build output if set
 USAGE
 
   for elem in $(get_image_list "${IMAGES_DIR}"); do
@@ -91,8 +93,10 @@ readonly TOOLS_DIR
 readonly ETC_DIR="${TOOLS_DIR}"/../etc
 readonly IMAGES_DIR="${TOOLS_DIR}"/../images
 declare -i SHA_ONLY=0
+declare -i BUILD_IMAGE_IF_NEEDED=1
 declare -i VERBOSE=0
-declare VERBOSE_OUT=/dev/null
+declare -r DOCKER_BUILD_ARGS="--progress plain"
+
 # shellcheck disable=SC1091
 source "${TOOLS_DIR}"/builder.sh
 WORKSPACE_MOUNT="$(builder::get_docker_workspace_mount)"
@@ -115,8 +119,6 @@ while [[ $# -gt 0 ]]; do
       ;;
     --verbose)
       VERBOSE=1
-      DOCKER_BUILD_ARGS="--progress plain"
-      VERBOSE_OUT=/dev/stdout
       shift
       ;;
     -h | --help) usage 0 ;;
@@ -126,6 +128,10 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ -v IMAGE_BUILD_VERBOSE ]]; then
+  VERBOSE=1
+fi
 
 if [[ -z ${IMG} ]]; then
   printf -- "error: --image must be specified\n" &>/dev/stderr
