@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.15.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.14.0...release-0.15.0) (2023-02-03)
+
+
+### Features
+
+* Use WORKSPACE_MOUNT if set
+
+
+### Bug Fixes
+
+* Pin commit-and-tag-version to v10.1.0
+
 ## [0.14.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.13.1...release-0.14.0) (2023-01-27)
 
 
