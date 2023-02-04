@@ -46,6 +46,7 @@ function builder::set_workspace() {
 #######################################
 function builder::get_docker_workspace_mount() {
   if [[ -v WORKSPACE_MOUNT ]]; then
+    printf "%s" "${WORKSPACE_MOUNT}"
     return
   fi
   # when running inside a docker container, expect /.dockerenv to exist

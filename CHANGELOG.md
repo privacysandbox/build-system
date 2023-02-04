@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.15.1](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.15.0...release-0.15.1) (2023-02-04)
+
+
+### Bug Fixes
+
+* Return value from get_docker_workspace_mount()
+
 ## [0.15.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.14.0...release-0.15.0) (2023-02-03)
 
 
