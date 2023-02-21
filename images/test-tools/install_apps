@@ -11,7 +11,7 @@ function install_packages() {
 }
 
 function install_ghz() {
-  go install github.com/bojand/ghz/cmd/ghz@v0.111.0
+  go install github.com/bojand/ghz/cmd/ghz@v0.114.0
   ghz --help
 }
 
