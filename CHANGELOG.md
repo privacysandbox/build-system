@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.18.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.17.0...release-0.18.0) (2023-02-23)
+
+
+### Features
+
+* Relax pinned versions for apk and yum packages to semver
+
+## [0.17.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.16.0...release-0.17.0) (2023-02-21)
+
+
+### Features
+
+* Upgrade black to 23.1.0
+* Upgrade tar to 1.34-r1
+* Upgrade to buildozer 6.0.1
+
+
+### Bug Fixes
+
+* Minor code cleanup in images/presubmit/install_apps
+* Upgrade ghz to 0.114.0
+
 ## [0.16.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.15.1...release-0.16.0) (2023-02-05)
 
 
