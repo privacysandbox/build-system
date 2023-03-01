@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.19.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.18.0...release-0.19.0) (2023-03-01)
+
+
+### Features
+
+* Add jq wrapper
+
+
+### Bug Fixes
+
+* Relax pinned version of openjdk to 11.0.*
+
 ## [0.18.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.17.0...release-0.18.0) (2023-02-23)
 
 
