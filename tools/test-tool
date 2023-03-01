@@ -43,8 +43,12 @@ declare -a DOCKER_RUN_ARGS=(
   --user "$(id -u):$(id -g)"
   --volume "${WORKSPACE_MOUNT}":/src/workspace
   --workdir /src/workspace/"${REL_PWD}"
-  "$(echo "${EXTRA_DOCKER_RUN_ARGS}" | envsubst)"
 )
+if [[ -n ${EXTRA_DOCKER_RUN_ARGS} ]]; then
+  DOCKER_RUN_ARGS+=(
+    "$(echo "${EXTRA_DOCKER_RUN_ARGS}" | envsubst)"
+  )
+fi
 if [[ -t 0 ]] && [[ -t 1 ]]; then
   # stdin and stdout are open, assume it's an interactive tty session
   DOCKER_RUN_ARGS+=(

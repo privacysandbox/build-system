@@ -4,9 +4,9 @@ set -o errexit
 
 function install_packages() {
   apk --no-cache add \
-    bash~=5.2.15 \
-    curl~=7.87.0 \
-    jq~=1.6 \
+    bash~=5 \
+    curl~=7 \
+    jq~=1 \
     libstdc++
 }
 
@@ -17,7 +17,7 @@ function install_ghz() {
 
 function install_nghttp2() {
   apk --no-cache add \
-    nghttp2~=1.51.0
+    nghttp2~=1
   h2load --version
 }
 
@@ -32,6 +32,7 @@ function install_cassowary() {
   cassowary --help
 }
 
+apk --no-cache update
 install_packages
 install_ghz
 install_nghttp2

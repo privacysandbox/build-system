@@ -42,7 +42,6 @@ repos:
   hooks:
   - id: git-check
   - id: script-must-not-have-extension
-    exclude: '^google_internal/.*/kokoro_(presubmit|continuous).sh$'
   - id: script-must-have-extension
   - id: require-ascii
   - id: shellcheck
