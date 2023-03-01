@@ -78,6 +78,25 @@ IMAGE_LIST="$(get_image_list "${IMAGES_DIR}")"
 readonly IMAGE_LIST
 declare -i RETCODE=0
 
+declare -a -r TOOLS=(
+  "${TOOLS_DIR}/curl --version"
+  "${TOOLS_DIR}/ghz --version"
+  "${TOOLS_DIR}/ab -V"
+  "${TOOLS_DIR}/cassowary --version"
+  "${TOOLS_DIR}/buildozer -help"
+  "${TOOLS_DIR}/grpcurl -version"
+  "${TOOLS_DIR}/h2load --version"
+  "${TOOLS_DIR}/hadolint --version"
+  "${TOOLS_DIR}/jq --version"
+)
+
+printf "Testing CLI tool wrappers\n"
+for tool_cmd in "${TOOLS[@]}"; do
+  printf "  %s\n" "${tool_cmd}"
+  ${tool_cmd}
+done
+
+
 TMP_HASHES_DIR1=$(mktemp --directory)
 
 # warning when running inside a docker container
