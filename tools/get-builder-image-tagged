@@ -23,9 +23,6 @@ set -o errexit
 trap _cleanup EXIT
 function _cleanup() {
   declare -r -i STATUS=$?
-  if [[ -n ${TAR_IMAGE} ]]; then
-    docker image rm --force "${TAR_IMAGE}" &>/dev/null
-  fi
   if [[ -n ${TEMPTAR} ]]; then
     rm -f "${TEMPTAR}" "${SHAFILE}"
   fi
@@ -66,23 +63,20 @@ function usage() {
   cat &>/dev/stderr <<USAGE
 usage:
   $0 <options>
-    --no-build            Do not build image if it doesn't exist
-    --image               Image name for the build runtime. Valid names:
-
-environment variables (all optional):
-    IMAGE_BUILD_VERBOSE   Capture docker build output if set
+    --no-build     Do not build image if it doesn't exist
+    --image        Image name for the build runtime. Valid names:
 USAGE
 
   for elem in $(get_image_list "${IMAGES_DIR}"); do
-    if [[ ${IMAGE} == "${elem}" ]]; then
-      local EXTRA=" (default)"
-    fi
-    printf "                       *  %s%s\n" "${elem}" "${EXTRA}" &>/dev/stderr
+    printf "                       *  %s\n" "${elem}" &>/dev/stderr
   done
 
   cat &>/dev/stderr <<USAGE
     --sha-only     Emit only the SHA rather than the image name
     --verbose      Enable verbose output
+
+environment variables (all optional):
+    IMAGE_BUILD_VERBOSE   Capture docker build output if set
 USAGE
   # shellcheck disable=SC2086
   exit ${exitval}
@@ -99,7 +93,7 @@ declare -r -a DOCKER_BUILD_ARGS=(
   --progress plain
 )
 
-# shellcheck disable=SC1091
+# shellcheck disable=SC1090
 source "${TOOLS_DIR}"/builder.sh
 WORKSPACE_MOUNT="$(builder::get_docker_workspace_mount)"
 readonly WORKSPACE_MOUNT
@@ -151,20 +145,30 @@ if ! [[ -s ${IMAGE_PATH_FULL}/Dockerfile ]]; then
   exit 1
 fi
 
-# install gnu tar into a docker image
-readonly TAR_IMAGE="builders/tar-get-builder-image-tagged:pid-$$"
-BUILD_OUTPUT="$(make_temp .log)"
-readonly BUILD_OUTPUT
-{
-  cat <<Dockerfile
+# create an image containing gnu tar
+function generate_image() {
+  {
+    cat <<Dockerfile
 FROM alpine:3.16
 RUN apk --no-cache add tar~=1.34
 Dockerfile
-} | docker buildx build "${DOCKER_BUILD_ARGS[@]}" --no-cache --output=type=docker --tag "${TAR_IMAGE}" - &>"${BUILD_OUTPUT}"
-rm -f "${BUILD_OUTPUT}"
-if ! docker image inspect "${TAR_IMAGE}" &>/dev/null; then
-  printf "error creating docker image [%s]\n" "${TAR_IMAGE}" &>/dev/stderr
-  exit 1
+  } | docker buildx build "${DOCKER_BUILD_ARGS[@]}" --no-cache --output=type=docker --tag "${TAR_IMAGE}" - &>"${BUILD_OUTPUT}"
+  rm -f "${BUILD_OUTPUT}"
+  if ! docker image inspect "${TAR_IMAGE}" &>/dev/null; then
+    printf "error creating docker image [%s]\n" "${TAR_IMAGE}" &>/dev/stderr
+    exit 1
+  fi
+}
+
+BUILD_OUTPUT="$(make_temp .log)"
+readonly BUILD_OUTPUT
+BUILDSYS_VERSION="$(cat "${WORKSPACE}"/version.txt)"
+readonly BUILDSYS_VERSION
+readonly TAR_IMAGE="builders/tar-get-builder-image-tagged:v${BUILDSYS_VERSION}"
+TAR_IMAGE_HASH="$(docker image ls --filter "reference=${TAR_IMAGE}" --quiet)"
+readonly TAR_IMAGE_HASH
+if [[ -z ${TAR_IMAGE_HASH} ]]; then
+  generate_image
 fi
 
 # Create a deterministic tar file for the specified file path, returning
@@ -182,19 +186,20 @@ function _tar_for_dir() {
   # expand TMP_IMAGE_DIR immediately
   trap "rm -rf '${TMP_IMAGE_DIR}'" RETURN
 
-  WS_FILE_TAR="$(realpath "${FILE_TAR}" --relative-to="${WORKSPACE}")"
-  WS_FILE_SHA="$(realpath "${FILE_SHA}" --relative-to="${WORKSPACE}")"
-  WS_FILEPATH="$(realpath "${FILEPATH}" --relative-to="${WORKSPACE}")"
-  WS_TMP_IMAGE_DIR="$(realpath "${TMP_IMAGE_DIR}" --relative-to="${WORKSPACE}")"
+  local -r WS_FILE_TAR="$(realpath "${FILE_TAR}" --relative-to="${WORKSPACE}")"
+  local -r WS_FILE_SHA="$(realpath "${FILE_SHA}" --relative-to="${WORKSPACE}")"
+  local -r WS_FILEPATH="$(realpath "${FILEPATH}" --relative-to="${WORKSPACE}")"
+  local -r WS_TMP_IMAGE_DIR="$(realpath "${TMP_IMAGE_DIR}" --relative-to="${WORKSPACE}")"
   # find workspace etc files that are also in the image dir and the builders etc dir
-  WORKSPACE_ETC_FILES="$({
+  local -r WORKSPACE_ETC_FILES="$({
     # shellcheck disable=SC2012
     ls -A -1 "${FILEPATH}" "${ETC_DIR}" | sort | uniq -d
     ls -A -1 "${WORKSPACE}"
   } | sort | uniq -d)"
   # create a deterministic tarball of the collected files
-  docker run --rm \
-    --entrypoint=/bin/sh \
+  docker run \
+    --rm \
+    --entrypoint /bin/sh \
     --volume "${WORKSPACE_MOUNT}":/workspace \
     --workdir /workspace \
     "${TAR_IMAGE}" -c "
@@ -218,7 +223,7 @@ tar --create --dereference --sort=name --owner=0 --group=0 --numeric-owner --for
 "
 }
 
-TEMPTAR="$(make_temp .tar.gz)"
+TEMPTAR="$(make_temp .tar)"
 readonly TEMPTAR
 SHAFILE="$(make_temp .sha)"
 readonly SHAFILE

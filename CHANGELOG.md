@@ -2,36 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
-## [0.23.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.22.0...release-0.23.0) (2023-04-13)
+## 0.24.0 (2023-05-05)
 
 
 ### Features
 
-* Add wrapper for commit-and-tag-version ([9a996c0]( ))
-* Upgrade curl to version 8 ([9f30521]( ))
-* Upgrade to amazonlinux 2.0.20230320.0 ([e5f9c1d]( ))
+* Add --build-images flag to tests/run-tests
+* Reuse tar image if available
 
 
 ### Bug Fixes
 
-* Use commit-and-tag-version wrapper ([a5125a4]( ))
+* Address linter warnings
+* Address linter warnings for tools
+* Correct mangled usage text
+* Pin pre-commit to 3.x
+* Remove .gz suffix from tar file
+* Remove function keyword for busybox sh script
+* Remove Release in changelog title
+* Upgrade pre-commit hooks
 
-## [0.22.0](https://team/kiwi-air-force-eng-team/build-system/compare/release-0.21.1...release-0.22.0) (2023-04-03)
+## 0.23.0 (2023-04-13)
 
 
 ### Features
 
-* Add awscurl wrapper script ([58b2ce1]( ))
-* Add tests for misc CLI wrappers ([105c7ee]( ))
-* Correctly quote bash args ([d57a0de]( ))
-* Extend test-tool to support the release image ([61129e8]( ))
-* Use login shell for interactive container ([67fe3e0]( ))
+* Add wrapper for commit-and-tag-version
+* Upgrade curl to version 8
+* Upgrade to amazonlinux 2.0.20230320.0
+
+
+### Bug Fixes
+
+* Use commit-and-tag-version wrapper
+
+## 0.22.0 (2023-04-03)
+
+
+### Features
+
+* Add awscurl wrapper script
+* Add tests for misc CLI wrappers
+* Correctly quote bash args
+* Extend test-tool to support the release image
+* Use login shell for interactive container
 
 
 ### Documentation
 
-* Add section on tools to README ([d572517]( ))
-* Remove section on building images directly ([19d47ec]( ))
+* Add section on tools to README
+* Remove section on building images directly
 
 ### [0.21.1] (2023-03-07)
 
