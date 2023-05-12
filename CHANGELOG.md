@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.25.0 (2023-05-11)
+
+
+### Features
+
+* Update default bazel version to 5.4.1
+* Upgrade rules_python to 0.21.0
+
+
+### Bug Fixes
+
+* Add file utility to build-debian image
+
 ## 0.24.0 (2023-05-05)
 
 

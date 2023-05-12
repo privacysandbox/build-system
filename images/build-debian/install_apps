@@ -53,6 +53,7 @@ function install_misc() {
     chrpath="0.16-*" \
     libcurl4="7.68.*" \
     curl="7.68.*" \
+    file="1:5*" \
     gettext="0.19.*" \
     git="1:2.25.*" \
     gnupg="2.2.*" \
