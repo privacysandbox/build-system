@@ -47,12 +47,17 @@ repos:
   - id: shellcheck
 
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v16.0.2
+  rev: v16.0.3
   hooks:
   - id: clang-format
     types_or:
     - c++
     - c
+
+- repo: https://github.com/bufbuild/buf
+  rev: v1.19.0
+  hooks:
+  - id: buf-format
 
 - repo: local
   hooks:
