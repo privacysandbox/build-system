@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.28.0 (2023-05-24)
+
+
+### Features
+
+* Update ca-certificates
+
+
+### Bug Fixes
+
+* Downgrade to clang v15
+* Use builders version.txt for tarfile tag
+
 ## 0.27.0 (2023-05-23)
 
 

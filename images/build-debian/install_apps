@@ -45,7 +45,7 @@ function apt_update() {
 function install_misc() {
   DEBIAN_FRONTEND=noninteractive apt-get --quiet install -y --no-install-recommends \
     apt-transport-https="2.0.*" \
-    ca-certificates="20211016ubuntu0.20.04.1" \
+    ca-certificates \
     chrpath="0.16-*" \
     libcurl4="7.68.*" \
     curl="7.68.*" \
@@ -54,7 +54,7 @@ function install_misc() {
     git="1:2.25.*" \
     gnupg="2.2.*" \
     locales="2.31-*" \
-    lsb-release="11.1.0*" \
+    lsb-release="11.1.*" \
     openjdk-11-jdk="11.0.*" \
     python3.9-venv="3.9.*" \
     rename="1.10-*" \
@@ -74,7 +74,7 @@ function install_misc() {
 }
 
 function install_clang() {
-  declare -r -i clang_ver=16
+  declare -r -i clang_ver=15
   curl --silent --fail --show-error --location --remote-name https://apt.llvm.org/llvm.sh
   chmod +x llvm.sh
   ./llvm.sh ${clang_ver}
