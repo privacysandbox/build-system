@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --locale)
       INSTALL_LOCALE="$2"
-      shift 2
+      shift 2 || usage
       ;;
     --verbose)
       VERBOSE=1

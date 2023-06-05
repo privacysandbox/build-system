@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.29.0 (2023-06-05)
+
+
+### Features
+
+* Update pre-commit hook versions
+
+
+### Bug Fixes
+
+* Catch error when shifting multiple args
+* Remove golang from test-tools image
+* Resolve WORKSPACE using realpath
+* Use correct exit code in --fast mode
+
 ## 0.28.0 (2023-05-24)
 
 
