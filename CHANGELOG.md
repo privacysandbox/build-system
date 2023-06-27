@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.30.1 (2023-06-27)
+
+
+### Bug Fixes
+
+* Use = for --env flag
+* Use = for --env flag for all tools
+
 ## 0.30.0 (2023-06-26)
 
 
