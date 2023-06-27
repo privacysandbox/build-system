@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.30.0 (2023-06-26)
+
+
+### Features
+
+* Install numpy for python3.9
+* Set PYTHON_BIN_PATH/PYTHON_LIB_PATH in build-debian
+* Upgrade AmazonLinux2 to 20230530
+* Upgrade packer to v1.9.1
+
+
+### Bug Fixes
+
+* Add links for llvm-{cov,profdata}
+
 ## 0.29.0 (2023-06-05)
 
 
