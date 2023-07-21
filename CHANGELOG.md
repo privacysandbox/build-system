@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.33.0 (2023-07-20)
+
+
+### Features
+
+* Install python libclang 15 in build-debian
+* Add OSSF Scorecard GitHub Action
+
 ## 0.32.0 (2023-07-14)
 
 
