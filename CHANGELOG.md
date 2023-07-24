@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.36.0 (2023-07-24)
+
+
+### Features
+
+* Add convert_docker_to_nitro
+
 ## 0.35.0 (2023-07-21)
 
 
