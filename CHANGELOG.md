@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.38.0 (2023-07-28)
+
+
+### Features
+
+* Add cbuild flag --seccomp-unconfined
+
 ## 0.37.0 (2023-07-27)
 
 
