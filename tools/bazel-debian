@@ -39,7 +39,6 @@ function partition_array() {
   declare -r delim="--"
   declare target=pre
   for i in "${!arr[@]}"; do
-    printf "val: %s\n" "${arr[$i]}"
     if [[ ${arr[$i]} == "${delim}" ]]; then
       target=post
     fi
