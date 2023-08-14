@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.42.1 (2023-08-14)
+
+
+### Bug Fixes
+
+* Revert override of /usr/bin/python links in build-amazonlinux2
+
 ## 0.42.0 (2023-08-07)
 
 

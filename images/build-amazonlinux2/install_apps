@@ -48,8 +48,6 @@ function install_python() {
   mkdir -p /opt/bin
   update-alternatives \
     --install /opt/bin/python3 python3-opt /usr/bin/python3.8 100 \
-    --slave /usr/bin/python3 python3-usr /usr/bin/python3.8 \
-    --slave /usr/bin/python python-usr /usr/bin/python3.8 \
     --slave /opt/bin/python python /usr/bin/python3.8
 
 }
