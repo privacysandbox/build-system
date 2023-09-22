@@ -5,7 +5,7 @@ set -o errexit
 
 declare -i VERBOSE=0
 declare INSTALL_LOCALE=en_US.UTF-8
-declare -r -i CLANG_VER=15
+declare -r -i CLANG_VER=16
 
 usage() {
   local exitval=${1-1}

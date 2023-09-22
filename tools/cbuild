@@ -131,7 +131,7 @@ source "${TOOLS_DIR}"/builder.sh
 trap _cleanup EXIT
 function _cleanup() {
   local -r -i status=$?
-  "${TOOLS_DIR}"/normalize-bazel-symlinks
+  "${TOOLS_DIR}"/normalize-bazel-symlinks &>/dev/null
   exit ${status}
 }
 
