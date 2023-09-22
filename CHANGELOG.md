@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.46.0 (2023-09-22)
+
+
+### Bug Fixes
+
+* Hide normalize-bazel-symlinks in cbuild
+
+
+### Dependencies
+
+* **deps:** Update amazonlinux images to Aug 2023
+* **deps:** Upgrade clang to v16 in build-debian
+
 ## 0.45.0 (2023-09-19)
 
 
