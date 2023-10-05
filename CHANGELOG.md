@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.47.0 (2023-10-05)
+
+
+### Features
+
+* Add --cmd-profiler flag to tools/cbuild
+* Add google-pprof to coverage-tools image
+* Add libprofiler.so to build-debian image
+
+
+### Bug Fixes
+
+* Indicate default image in help text
+
 ## 0.46.1 (2023-10-04)
 
 
