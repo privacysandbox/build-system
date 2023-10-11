@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.48.0 (2023-10-11)
+
+
+### Features
+
+* Add tools/bazel-amazonlinux2023
+
+
+### Bug Fixes
+
+* Add lldb symlink
+
 ## 0.47.0 (2023-10-05)
 
 
