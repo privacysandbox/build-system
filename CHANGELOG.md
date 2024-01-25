@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.53.0 (2024-01-25)
+
+
+### Features
+
+* Add support to collect-coverage tool for custom lcov report
+
+
+### Bug Fixes
+
+* Improve --cmd-profiler support
+
 ## 0.52.0 (2023-12-02)
 
 
