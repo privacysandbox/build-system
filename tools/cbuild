@@ -134,13 +134,6 @@ if ! [[ " ${IMAGE_LIST[*]} " =~ " ${IMAGE} " ]]; then
     usage 1
 fi
 
-if [[ ${WITH_CMD_PROFILER} -eq 1 ]]; then
-  if [[ ${IMAGE} != build-debian ]]; then
-    printf "error: --cmd-profiler is only compatible with build-debian\n" &>/dev/stderr
-    usage 1
-  fi
-  CMD_PROFILER="LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libprofiler.so "
-fi
 TOOLS_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 readonly TOOLS_DIR
 # shellcheck disable=SC1090
@@ -159,6 +152,9 @@ export WORKSPACE_MOUNT
 if [[ ${VERBOSE} -eq 1 ]]; then
   printf "mounting workspace into container: %s\n" "${WORKSPACE_MOUNT}" &>/dev/stderr
 fi
+
+TOOLS_RELDIR="$(realpath "${TOOLS_DIR}" --relative-to="${WORKSPACE}")"
+readonly TOOLS_RELDIR
 
 if [[ -n ${CBUILD_IMAGE} ]]; then
   IMAGE_TAGGED=${CBUILD_IMAGE}
@@ -179,6 +175,17 @@ DOCKER_RUN_ARGS+=(
 
 if [[ ${DOCKER_SECCOMP_UNCONFINED} -eq 1 ]]; then
   DOCKER_RUN_ARGS+=("--security-opt=seccomp=unconfined")
+fi
+
+if [[ ${WITH_CMD_PROFILER} -eq 1 ]]; then
+  if [[ ${IMAGE} != build-debian ]]; then
+    printf "error: --cmd-profiler is only compatible with build-debian\n" &>/dev/stderr
+    usage 1
+  fi
+  DOCKER_RUN_ARGS+=(
+    "--env=CMD_PROFILER=LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libprofiler.so"
+    "--env=CPUPROFILE=benchmark.prof"
+  )
 fi
 
 # inside the docker build images, /bazel_root is the bazel cache dir, per the system-wide bazelrc
@@ -222,10 +229,16 @@ if [[ -z ${CMD} ]]; then
     ${DOCKER_RUN_ARGS[@]} \
     "${IMAGE_TAGGED}" \
     --login
+elif [[ ${WITH_CMD_PROFILER} -eq 1 ]]; then
+  # shellcheck disable=SC2068
+  docker run \
+    ${DOCKER_RUN_ARGS[@]} \
+    "${IMAGE_TAGGED}" \
+    --login -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; env \${CMD_PROFILER} ${CMD}"
 else
   # shellcheck disable=SC2068
   docker run \
     ${DOCKER_RUN_ARGS[@]} \
     "${IMAGE_TAGGED}" \
-    --login -c "${CMD_PROFILER}${CMD}"
+    --login -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; ${CMD}"
 fi
