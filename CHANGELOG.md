@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.54.0 (2024-02-09)
+
+
+### Features
+
+* Set cbuild workdir to pwd relative to root workspace
+
 ## 0.53.0 (2024-01-25)
 
 
