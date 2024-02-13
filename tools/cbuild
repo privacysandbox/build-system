@@ -163,12 +163,20 @@ else
 fi
 readonly IMAGE_TAGGED
 
+PWD_WORKSPACE_REL_PATH="$(realpath --relative-base="${WORKSPACE}" "${PWD}")"
+readonly PWD_WORKSPACE_REL_PATH
+WORKDIR=/src/workspace
+if [[ ${PWD_WORKSPACE_REL_PATH:0:1} != / ]]; then
+  WORKDIR="/src/workspace/${PWD_WORKSPACE_REL_PATH}"
+fi
+readonly WORKDIR
+
 declare -a DOCKER_RUN_ARGS
 DOCKER_RUN_ARGS+=(
   "--rm"
   "--entrypoint=/bin/bash"
   "--volume=${WORKSPACE_MOUNT}:/src/workspace"
-  "--workdir=/src/workspace"
+  "--workdir=${WORKDIR}"
   "--network=${DOCKER_NETWORK}"
   "$(echo "${EXTRA_DOCKER_RUN_ARGS}" | envsubst)"
 )
