@@ -153,7 +153,7 @@ if [[ ${VERBOSE} -eq 1 ]]; then
   printf "mounting workspace into container: %s\n" "${WORKSPACE_MOUNT}" &>/dev/stderr
 fi
 
-TOOLS_RELDIR="$(realpath "${TOOLS_DIR}" --relative-to="${WORKSPACE}")"
+TOOLS_RELDIR="$(realpath "${TOOLS_DIR}" --relative-to="${PWD}")"
 readonly TOOLS_RELDIR
 
 if [[ -n ${CBUILD_IMAGE} ]]; then
