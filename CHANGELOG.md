@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.55.0 (2024-02-22)
+
+
+### Bug Fixes
+
+* Normalize bazel symlinks to a resolved path
+* Pass the correct path for normalize-bazel-symlinks
+
 ## 0.54.0 (2024-02-09)
 
 
