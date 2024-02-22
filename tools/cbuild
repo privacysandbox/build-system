@@ -248,5 +248,5 @@ else
   docker run \
     ${DOCKER_RUN_ARGS[@]} \
     "${IMAGE_TAGGED}" \
-    --login -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; ${CMD}"
+    --login -c "${CMD}"
 fi

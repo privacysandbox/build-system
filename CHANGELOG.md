@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.55.1 (2024-02-22)
+
+
+### Bug Fixes
+
+* Do not invoke normalize-bazel-symlinks for cbuild --cmd
+
 ## 0.55.0 (2024-02-22)
 
 
