@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.59.0 (2024-05-02)
+
+
+### Bug Fixes
+
+* **deps:** Update pre-commit hooks
+
+
+### Dependencies
+
+* **deps:** Upgrade alpine base image
+* **deps:** Upgrade base images for Amazon Linux
+* **deps:** Upgrade grpcurl to 1.9.1
+* **deps:** Upgrade presubmit to ubuntu 24.04
+
 ## 0.58.0 (2024-04-26)
 
 
