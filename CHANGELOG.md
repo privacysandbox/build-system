@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.60.0 (2024-05-07)
+
+
+### Dependencies
+
+* **deps:** Upgrade coverage-tools to ubuntu 24.04
+* **deps:** Upgrade golang to 1.22.2
+
 ## 0.59.0 (2024-05-02)
 
 
