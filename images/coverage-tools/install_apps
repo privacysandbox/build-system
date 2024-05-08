@@ -34,7 +34,7 @@ function apt_update() {
 function install_misc() {
   DEBIAN_FRONTEND=noninteractive apt-get --quiet install -y --no-install-recommends \
     google-perftools="2.*" \
-    lcov="1.*"
+    lcov="2.*"
 }
 
 function clean_debian() {
