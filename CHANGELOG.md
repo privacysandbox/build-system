@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.61.1 (2024-05-10)
+
+
+### Bug Fixes
+
+* Add docker flags to container name
+* Set 8h ttl for long-running build container
+
 ## 0.61.0 (2024-05-08)
 
 

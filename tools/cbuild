@@ -78,6 +78,7 @@ declare -i WITH_CMD_PROFILER=0
 DOCKER_NETWORK="${DOCKER_NETWORK:-bridge}"
 declare -i DOCKER_SECCOMP_UNCONFINED=0
 declare -i KEEP_CONTAINER_RUNNING=0
+declare LONG_RUNNING_CONTAINER_TIMEOUT=8h
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -138,12 +139,6 @@ if ! [[ " ${IMAGE_LIST[*]} " =~ " ${IMAGE} " ]]; then
     usage 1
 fi
 
-function get_container_name() {
-  local -r mount="$(echo "${WORKSPACE_MOUNT}" | sha256sum)"
-  local -r image_sha="${IMAGE_TAGGED##*-}"
-  printf "cbuild-%s-%s" "${mount:0:7}" "${image_sha:0:7}"
-}
-
 TOOLS_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 readonly TOOLS_DIR
 # shellcheck disable=SC1090
@@ -181,9 +176,6 @@ if [[ ${PWD_WORKSPACE_REL_PATH:0:1} != / ]]; then
 fi
 readonly WORKDIR
 
-DOCKER_CONTAINER_NAME="$(get_container_name)"
-readonly DOCKER_CONTAINER_NAME
-
 # DOCKER_EXEC_RUN_ARGS applies to both `docker run` and `docker exec`
 declare -a DOCKER_EXEC_RUN_ARGS=(
   "--workdir=${WORKDIR}"
@@ -191,7 +183,6 @@ declare -a DOCKER_EXEC_RUN_ARGS=(
 declare -a DOCKER_RUN_ARGS=(
   "--rm"
   "--entrypoint=/bin/bash"
-  "--name=${DOCKER_CONTAINER_NAME}"
   "--volume=${WORKSPACE_MOUNT}:/src/workspace"
   "--network=${DOCKER_NETWORK}"
   "$(echo "${EXTRA_DOCKER_RUN_ARGS}" | envsubst)"
@@ -236,6 +227,23 @@ if [[ -t 0 ]] && [[ -t 1 ]]; then
   )
 fi
 
+function get_container_name() {
+  local -r mount="$(echo "${WORKSPACE_MOUNT}" | sha256sum)"
+  local -r image_sha="${IMAGE_TAGGED##*-}"
+  local -r docker_args_sha="$({
+cat <<EOF
+${DOCKER_RUN_ARGS[*]}
+${DOCKER_EXEC_RUN_ARGS[*]}
+EOF
+} | sha256sum)"
+  printf "cbuild-%s-%s-%s" "${mount:0:7}" "${image_sha:0:7}" "${docker_args_sha:0:7}"
+}
+
+DOCKER_CONTAINER_NAME="$(get_container_name)"
+readonly DOCKER_CONTAINER_NAME
+
+DOCKER_RUN_ARGS+=("--name=${DOCKER_CONTAINER_NAME}")
+
 if [[ ${VERBOSE} -eq 1 ]]; then
   set -o xtrace
 fi
@@ -277,7 +285,7 @@ function long_running_container() {
         --login -c "
 declare -i -r pid=\$(bazel info server_pid 2>/dev/null)
 # wait for pid, even if it's not a child process of this shell
-tail --pid=\${pid} -f /dev/null
+timeout ${LONG_RUNNING_CONTAINER_TIMEOUT} tail --pid=\${pid} -f /dev/null
 " &>/dev/null
     fi
   fi
