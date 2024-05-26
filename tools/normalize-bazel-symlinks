@@ -43,6 +43,9 @@ if [[ -f /.dockerenv ]]; then
   _normalize_fn=normalize_symlink_docker
 fi
 
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"/builder.sh
+cd "${WORKSPACE}" || true
+
 declare -a -r LINK_DIRS=(
   bazel-bin
   bazel-out
