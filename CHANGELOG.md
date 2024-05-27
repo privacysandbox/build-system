@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.63.0 (2024-05-26)
+
+
+### Features
+
+* Support cmd-profiler mode with/without --cmd
+
+
+### Bug Fixes
+
+* Ensure normalize-bazel-symlinks is in the workspace dir
+
+
+### Dependencies
+
+* **deps:** Upgrade clang-format pre-commit hook
+
 ## 0.62.0 (2024-05-10)
 
 
