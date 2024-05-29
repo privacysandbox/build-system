@@ -299,12 +299,12 @@ if [[ ${KEEP_CONTAINER_RUNNING} -eq 1 ]]; then
       docker exec \
         "${DOCKER_EXEC_RUN_ARGS[@]}" \
         "${DOCKER_RUNNING_CONTAINER}" \
-        /bin/bash -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; env \${CMD_PROFILER} ${CMD}"
+        /bin/bash -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; env \${CMD_PROFILER} ${CMD:-/bin/sh}"
     else
       docker exec \
         "${DOCKER_EXEC_RUN_ARGS[@]}" \
         "${DOCKER_RUNNING_CONTAINER}" \
-        /bin/bash -c "${CMD}"
+        /bin/bash -c "${CMD:-/bin/sh}"
     fi
   fi
 else
@@ -328,6 +328,6 @@ else
       ${DOCKER_RUN_ARGS[@]} \
       "${DOCKER_EXEC_RUN_ARGS[@]}" \
       "${IMAGE_TAGGED}" \
-      --login -c "$CMD"
+      --login -c "${CMD}"
   fi
 fi
