@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.64.1 (2024-05-29)
+
+
+### Bug Fixes
+
+* Support container reuse when --cmd not specified
+* Use find to identify bazel symlinks
+
 ## 0.64.0 (2024-05-27)
 
 
