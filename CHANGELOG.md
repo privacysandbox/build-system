@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.65.0 (2024-06-04)
+
+
+### Features
+
+* Add DOCKER_NETWORK env var for test-tools
+
 ## 0.64.1 (2024-05-29)
 
 
