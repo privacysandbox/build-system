@@ -1,0 +1,4 @@
+build:profiler --dynamic_mode=off
+build:profiler --copt=-gmlt
+build:profiler --copt=-fno-omit-frame-pointer
+build:profiler --strip=never

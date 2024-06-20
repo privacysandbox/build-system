@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.66.0 (2024-06-20)
+
+
+### Features
+
+* Add cpu-profiler flags to cbuild
+* Add profiler config in .profiler.bazelrc
+
 ## 0.65.1 (2024-06-04)
 
 
