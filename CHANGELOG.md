@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.66.1 (2024-06-24)
+
+
+### Bug Fixes
+
+* Add --compilation_mode=opt to build:profiler config
+
 ## 0.66.0 (2024-06-20)
 
 
