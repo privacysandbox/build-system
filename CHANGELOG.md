@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.67.0 (2024-07-31)
+
+
+### Bug Fixes
+
+* Add EXTRA_CBUILD_ARGS to tools/bazel-* scripts
+
+
+### Dependencies
+
+* **deps:** Update buildozer to 6.1.1
+* **deps:** Upgrade amazonlinux2023 to 5.20240722.0
+
 ## 0.66.1 (2024-06-24)
 
 
