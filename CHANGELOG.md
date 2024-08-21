@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.68.1 (2024-08-21)
+
+### Bug Fixes
+
+* Fix load bazel_tools import for Python deps
+
 ## 0.68.0 (2024-08-21)
 
 

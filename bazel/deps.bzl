@@ -14,7 +14,8 @@
 
 """Load definitions for use in WORKSPACE files."""
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "maybe")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def python_deps():
     """Load rules_python. Use python_register_toolchains to also resgister container-based python toolchain."""
