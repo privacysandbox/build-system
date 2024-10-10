@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.70.0 (2024-10-10)
+
+
+### Features
+
+* add awk, crane and jq to build-* images for the oci_pull credential helper
+
 ## 0.69.1 (2024-09-19)
 
 ### Bug Fixes
