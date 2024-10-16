@@ -73,16 +73,16 @@ function install_misc() {
     file="1:5.*" \
     gettext="0.19.*" \
     git="1:2.25.*" \
-    gnupg="2.2.*" \
+    gnupg="2.4.*" \
     google-perftools="2.*" \
     locales="2.31-*" \
-    lsb-release="11.1.*" \
+    lsb-release="12.0-*" \
     openssh-client="1:8.2*" \
     patch="2.7.*" \
     rename="1.10-*" \
     software-properties-common="0.99.*" \
     unzip="6.0-*" \
-    wget="1.20.*" \
+    wget="1.21.*" \
     xz-utils="5.2.*" \
     zip="3.0-*"
   if [[ -n ${INSTALL_LOCALE} ]]; then

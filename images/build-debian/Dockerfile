@@ -13,9 +13,9 @@
 # limitations under the License.
 
 # Use fixed manifest digest to ensure reproducible.
-# https://hub.docker.com/layers/library/ubuntu/focal-20240530/images/sha256-85c08a37b74bc18a7b3f8cf89aabdfac51c525cdbc193a753f7907965e310ec2
-# ubuntu v20.04, focal-20240530
-ARG BASE_IMAGE=ubuntu@sha256:fa17826afb526a9fc7250e0fbcbfd18d03fe7a54849472f86879d8bf562c629e
+# https://hub.docker.com/layers/library/ubuntu/noble-20241011/images/sha256-4f6ea18f656aa6acbec418aeafc4b99c49ed958a1a47b5cd8cafd22698454500?context=explore
+# ubuntu v24.04, noble-20241011
+ARG BASE_IMAGE=ubuntu@sha256:d4f6f70979d0758d7a6f81e34a61195677f4f4fa576eaf808b79f17499fd93d1
 
 # ignore this hadolint error as BASE_IMAGE contains an image tag
 # hadolint ignore=DL3006
