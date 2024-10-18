@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.71.0 (2024-10-18)
+
+
+### Dependencies
+
+* **deps:** Pin AmazonLinux2023 Nitro CLI versions
+* **deps:** Update AmazonLinux base images to 2024-10-01
+* **deps:** Upgrade pre-commit and pylint
+
 ## 0.70.0 (2024-10-10)
 
 
