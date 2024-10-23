@@ -251,7 +251,12 @@ ${DOCKER_RUN_ARGS[*]}
 ${DOCKER_EXEC_RUN_ARGS[*]}
 EOF
 } | sha256sum)"
-  printf "cbuild-%s-%s-%s" "${mount:0:7}" "${image_sha:0:7}" "${docker_args_sha:0:7}"
+  CONTAINER_NAME_PREFIX="cbuild"
+  CONTAINER_NAME_PREFIX_REGEX="--name=([0-9a-zA-Z-]*)"
+  if [[ " ${EXTRA_DOCKER_RUN_ARGS} " =~ $CONTAINER_NAME_PREFIX_REGEX ]]; then
+      CONTAINER_NAME_PREFIX=${BASH_REMATCH[1]}
+  fi
+  printf "%s-%s-%s-%s" "${CONTAINER_NAME_PREFIX}" "${mount:0:7}" "${image_sha:0:7}" "${docker_args_sha:0:7}"
 }
 
 DOCKER_CONTAINER_NAME="$(get_container_name)"
