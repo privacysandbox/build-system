@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.72.0 (2024-10-23)
+
+
+### Features
+
+* Update build-debian image to Ubuntu 22.04 LTS
+
 ## 0.71.0 (2024-10-18)
 
 
