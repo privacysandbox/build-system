@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.73.0 (2024-10-31)
+
+
+### Features
+
+* Create .clang.bazelrc
+
+
+### Dependencies
+
+* **deps:** Upgrade clang to v18
+
 ## 0.72.0 (2024-10-23)
 
 

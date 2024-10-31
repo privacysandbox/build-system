@@ -57,6 +57,7 @@ function install_python() {
 }
 
 function install_misc() {
+  declare -r arch="$1"
   apt-get --quiet install -y --no-install-recommends \
     apt-transport-https="2.4.*" \
     bsdmainutils \
@@ -82,6 +83,14 @@ function install_misc() {
     xz-utils="5.2.*" \
     zip="3.0-*"
 
+  if [[ ${arch} == "amd64" ]]; then
+    wget http://launchpadlibrarian.net/592499569/bzip2_1.0.8-5build1_amd64.deb
+    dpkg -i bzip2_1.0.8-5build1_amd64.deb
+  else
+    wget http://launchpadlibrarian.net/592503850/bzip2_1.0.8-5build1_arm64.deb
+    dpkg -i bzip2_1.0.8-5build1_arm64.deb
+  fi
+
   if [[ -n ${INSTALL_LOCALE} ]]; then
     printf "\nSetting locale to: %s\n" "${INSTALL_LOCALE}"
     locale-gen "${INSTALL_LOCALE}"
@@ -93,7 +102,7 @@ function install_clang() {
   curl --silent --fail --show-error --location --remote-name https://apt.llvm.org/llvm.sh
   chmod +x llvm.sh
   ./llvm.sh ${CLANG_VER}
-  apt-get --quiet install -y --no-install-recommends libc++-${CLANG_VER}-dev
+  apt-get --quiet install -y --no-install-recommends libc++-${CLANG_VER}-dev libc++abi-${CLANG_VER}-dev libclang-${CLANG_VER}-dev
   for prog in clang lldb lld ld.lld llvm-cov llvm-profdata; do
     update-alternatives --install /usr/bin/${prog} ${prog} /usr/bin/${prog}-${CLANG_VER} 100
   done
@@ -121,9 +130,13 @@ function install_docker() {
 }
 
 function install_clang_tidy() {
-  apt-get --quiet install -y clang-tidy
-  printf "clang-tidy version: %s\n" "$(clang-tidy --version)"
-  printf "clang-tidy config: %s\n" "$(clang-tidy -dump-config)"
+  printf "clang-tidy version: %s\n" "$(apt-cache show clang-tidy)"
+  apt-get --quiet install -y clang-tidy-${CLANG_VER}
+  printf "clang-tidy version: %s\n" "$(clang-tidy-${CLANG_VER} --version)"
+  printf "clang-tidy config: %s\n" "$(clang-tidy-${CLANG_VER} -dump-config)"
+  installed_clang_tidy=$(which clang-tidy-${CLANG_VER})
+  installed_dir="$(dirname "${installed_clang_tidy}")"
+  ln -s "${installed_clang_tidy}" "${installed_dir}"/clang-tidy
 }
 
 function cleanup() {
@@ -143,7 +156,7 @@ fi
 declare -x -r DEBIAN_FRONTEND=noninteractive
 
 apt_update
-install_misc
+install_misc "${BUILD_ARCH}"
 install_clang
 install_clang_tidy
 install_golang "${BUILD_ARCH}"
