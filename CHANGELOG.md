@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.75.1 (2024-11-22)
+
+
+### Bug Fixes
+
+* Revert to ubuntu:20
+
 ## 0.75.0 (2024-11-21)
 
 
