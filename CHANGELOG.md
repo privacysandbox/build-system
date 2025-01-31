@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.78.0 (2025-01-31)
+
+
+### Features
+
+* Run bazel in privileged container
+
 ## 0.77.0 (2025-01-13)
 
 
