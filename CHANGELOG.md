@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.80.0 (2025-03-23)
+
+
+### Features
+
+* Remove spawn_strategy from bazel-debian
+
 ## 0.79.3 (2025-03-19)
 
 
