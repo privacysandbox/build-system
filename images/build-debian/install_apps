@@ -59,7 +59,9 @@ function install_python() {
   /usr/bin/python3 -m pip --version
   /usr/bin/python3 -m pip install \
     "libclang~=${CLANG_VER}.0" \
-    "numpy~=1.25"
+    "numpy~=1.25" \
+    "keyring~=25.6.0" \
+    "keyrings.google-artifactregistry-auth~=1.1.2"
 }
 
 function install_misc() {
