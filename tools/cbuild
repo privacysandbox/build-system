@@ -20,7 +20,7 @@ VERBOSE=0
 declare -r -a IMAGE_LIST=(
   "build-debian"
   "build-amazonlinux2023"
-  "nitro-cli"
+  "nitro-cli-linux6"
   "presubmit"
 )
 

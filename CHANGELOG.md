@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 0.82.0 (2025-03-27)
+
+
+### Features
+
+* Add tests for nitro-cli-linux6
+* Rename nitro-cli to nitro-cli-linux6
+
 ## 0.81.0 (2025-03-26)
 
 

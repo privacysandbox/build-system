@@ -100,7 +100,7 @@ repos:
     - dockerfile
     entry: tools/hadolint
     exclude: (?x)^(
-                 images/nitro-cli/Dockerfile
+                 images/nitro-cli-linux6/Dockerfile
              )$
 
 - repo: https://github.com/pre-commit/mirrors-prettier
