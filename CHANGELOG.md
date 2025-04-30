@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 2.0.2 (2025-04-30)
+
+
+### Bug Fixes
+
+* Build container-structure-test using debian bullseye
+* Remove invalid bazel-amazonlinux2
+
+## 2.0.1 (2025-04-28)
+
+
+### Bug Fixes
+
+* Build container-structure-test using debian bullseye
+
 ## 2.0.0 (2025-04-25)
 
 
