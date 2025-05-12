@@ -22,12 +22,12 @@ function _golang_install_dir() {
 function install_golang() {
   declare -r _ARCH="$1"
   declare -r FNAME=gobin.tar.gz
-  declare -r VERSION=1.22.2
+  declare -r VERSION=1.24.3
   # shellcheck disable=SC2155
   declare -r GO_INSTALL_DIR="$(_golang_install_dir)"
   declare -r -A GO_HASHES=(
-    [amd64]="5901c52b7a78002aeff14a21f93e0f064f74ce1360fce51c6ee68cd471216a17"
-    [arm64]="36e720b2d564980c162a48c7e97da2e407dfcc4239e1e58d98082dfa2486a0c1"
+    [amd64]="3333f6ea53afa971e9078895eaa4ac7204a8c6b5c68c10e6bc9a33e8e391bdd8"
+    [arm64]="a463cb59382bd7ae7d8f4c68846e73c4d589f223c589ac76871b66811ded7836"
   )
   declare -r GO_HASH=${GO_HASHES[${_ARCH}]}
   if [[ -z ${GO_HASH} ]]; then
