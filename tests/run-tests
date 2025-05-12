@@ -216,7 +216,7 @@ function generate_hashes_cbuild() {
 
   printf "Generating image hashes (cbuild mode)\n"
   for img in ${IMAGE_LIST}; do
-    if ! "${TOOLS_DIR}"/cbuild --image build-debian --cmd "tools/get-builder-image-tagged ${GET_BUILDER_IMAGE_ARGS[*]} --image ${img}" >"${TMP_HASHES_DIR2}/${img}"; then
+    if ! "${TOOLS_DIR}"/cbuild --one-time --image build-debian --cmd "tools/get-builder-image-tagged ${GET_BUILDER_IMAGE_ARGS[*]} --image ${img}" >"${TMP_HASHES_DIR2}/${img}"; then
       printf "Error generating image hash: %s\n" "${img}" &>/dev/stderr
       RETCODE+=1
     fi

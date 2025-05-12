@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 2.1.0 (2025-05-12)
+
+
+### Features
+
+* Add .clang.bazelrc
+* Add apt and go caches to presubmit Dockerfile
+* Add apt package cache to build-debian Dockerfile
+* Move .bazelrc files to bazel dir
+* Remove libprofiler from build-debian image
+
+
+### Dependencies
+
+* **deps:** Upgrade amazonlinux to v2023.7.20250428.1
+* **deps:** Upgrade golang, bazelisk and crane
+
 ## 2.0.2 (2025-04-30)
 
 

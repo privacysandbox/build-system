@@ -17,16 +17,6 @@
 # ubuntu v22.04, jammy-20240911.1
 ARG BASE_IMAGE=ubuntu@sha256:58b87898e82351c6cf9cf5b9f3c20257bb9e2dcf33af051e12ce532d7f94e3fe
 
-# ignore this hadolint error as BASE_IMAGE contains an image tag
-# hadolint ignore=DL3006
-FROM ${BASE_IMAGE} as libprofiler-builder
-ENV CC=clang \
-    CXX=clang++
-ADD https://github.com/gperftools/gperftools/releases/download/gperftools-2.16/gperftools-2.16.tar.gz /build/gperftools.tar.gz
-ADD https://apt.llvm.org/llvm.sh /build/llvm.sh
-COPY compile_libprofiler /scripts/
-RUN /scripts/compile_libprofiler
-
 FROM docker/buildx-bin:v0.10 AS buildx-bin
 
 # ignore this hadolint error as BASE_IMAGE contains an image tag
@@ -34,14 +24,10 @@ FROM docker/buildx-bin:v0.10 AS buildx-bin
 FROM ${BASE_IMAGE}
 ARG LOCALE=en_US.UTF-8
 ARG TARGETARCH
-COPY install_pprof install_apps install_golang_apps install_go.sh generate_system_bazelrc .bazelversion /scripts/
+COPY install_apps install_golang_apps install_go.sh generate_system_bazelrc .bazelversion /scripts/
 COPY get_workspace_mount /usr/local/bin
 COPY gitconfig /etc
 COPY --from=buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
-COPY --from=libprofiler-builder /usr/lib/libprofiler.so.* /usr/lib/x86_64-linux-gnu/
-RUN \
-  ln -rs /usr/lib/x86_64-linux-gnu/libprofiler.so.0.* /usr/lib/x86_64-linux-gnu/libprofiler.so.0 && \
-  ln -rs /usr/lib/x86_64-linux-gnu/libprofiler.so.0.* /usr/lib/x86_64-linux-gnu/libprofiler.so
 
 ENV BUILD_ARCH="${TARGETARCH}" \
     WORKSPACE=/src/workspace \
@@ -52,13 +38,14 @@ ENV BUILD_ARCH="${TARGETARCH}" \
     LC_ALL=${LOCALE} \
     LC_CTYPE=${LOCALE}
 
-RUN \
-  chmod 644 /etc/gitconfig && \
-  /scripts/install_apps --locale ${LOCALE} && \
-  /scripts/generate_system_bazelrc --user-root-name ubuntu && \
-  /scripts/install_golang_apps && \
-  /scripts/install_pprof && \
-  rm -rf /scripts
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  rm -f /etc/apt/apt.conf.d/docker-clean \
+  && chmod 644 /etc/gitconfig \
+  && /scripts/install_apps --locale ${LOCALE} \
+  && /scripts/generate_system_bazelrc --user-root-name ubuntu \
+  && /scripts/install_golang_apps \
+  && rm -rf /scripts
 
 ENV PATH="/opt/bin:${PATH}:/usr/local/go/bin" \
     PYTHON_BIN_PATH="/opt/bin/python3" \

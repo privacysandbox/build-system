@@ -63,7 +63,7 @@ function install_nitro() {
 
 function install_gcc() {
   # install gcc, which is required to build socat
-  dnf install -y "gcc-11.3.*"
+  dnf install -y "gcc-11.5.*"
 }
 
 function install_misc() {

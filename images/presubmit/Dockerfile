@@ -25,10 +25,14 @@ ENV BUILD_ARCH="${TARGETARCH}" \
     PRE_COMMIT_TOOL=${PRE_COMMIT_VENV_DIR}/bin/pre-commit \
     TZ=Etc/UTC
 
-RUN  \
-  chmod 644 /etc/gitconfig && \
-  /usr/bin/env -v PRE_COMMIT_VENV_DIR=${PRE_COMMIT_VENV_DIR} /scripts/install_apps && \
-  /scripts/install_golang_apps && \
-  rm -rf /scripts
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  --mount=type=cache,target=/go/pkg/mod \
+  --mount=type=cache,target=/root/.cache/go-build \
+  rm -f /etc/apt/apt.conf.d/docker-clean \
+  && chmod 644 /etc/gitconfig \
+  && /usr/bin/env -v PRE_COMMIT_VENV_DIR=${PRE_COMMIT_VENV_DIR} /scripts/install_apps \
+  && /scripts/install_golang_apps \
+  && rm -rf /scripts
 
 ENV PATH="${PATH}:/usr/local/go/bin"
