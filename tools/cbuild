@@ -57,13 +57,6 @@ USAGE
     --seccomp-unconfined       Run docker container without a seccomp profile
     --verbose                  Enable verbose output
 
-  Profiler flags:
-    --cmd-profiler                  enable profiler for the command
-    --cpu-profiler-signal <int>     unix signal to use to trigger CPU profiler output. Default: ${CPU_PROFILER_SIGNAL}
-    --cpu-profiler-filename <path>  path for the cpu profiler output. Default: ${CPU_PROFILER_FILENAME}
-    --heap-profiler-signal <int>     unix signal to use to trigger heap profiler output. Default: ${HEAP_PROFILER_SIGNAL}
-    --heap-profiler-filename <path>  path for the heap profiler output. Default: ${HEAP_PROFILER_FILENAME}
-
 Environment variables (all optional):
     WORKSPACE                  Full path to the workspace (repo root)
     WORKSPACE_MOUNT            Full path to the workspace on the host filesystem
@@ -81,19 +74,11 @@ USAGE
 
 declare -i WITH_SHARED_CACHE=1
 declare -i WITH_DOCKER_SOCK=1
-declare -i WITH_CMD_PROFILER=0
 DOCKER_NETWORK="${DOCKER_NETWORK:-bridge}"
 declare -i DOCKER_SECCOMP_UNCONFINED=0
 declare -i ONE_TIME_CONTAINER=0
 declare -i KEEP_CONTAINER_RUNNING=0
 declare LONG_RUNNING_CONTAINER_TIMEOUT=8h
-declare CPU_PROFILER_FILENAME=cpu.prof
-declare -i CPU_PROFILER_SIGNAL=12
-
-# If heap profiler filename is set by the caller then heap profile
-# is enabled instead of CPU profile.
-declare HEAP_PROFILER_FILENAME=""
-declare -i HEAP_PROFILER_SIGNAL=27
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -104,26 +89,6 @@ while [[ $# -gt 0 ]]; do
     --one-time)
       ONE_TIME_CONTAINER=1
       shift
-      ;;
-    --cmd-profiler)
-      WITH_CMD_PROFILER=1
-      shift
-      ;;
-    --cpu-profiler-filename)
-      CPU_PROFILER_FILENAME="$2"
-      shift 2 || usage
-      ;;
-    --cpu-profiler-signal)
-      CPU_PROFILER_SIGNAL=$2
-      shift 2 || usage
-      ;;
-    --heap-profiler-filename)
-      HEAP_PROFILER_FILENAME="$2"
-      shift 2 || usage
-      ;;
-    --heap-profiler-signal)
-      HEAP_PROFILER_SIGNAL=$2
-      shift 2 || usage
       ;;
     --env)
       ENV_VARS+=("$2")
@@ -193,9 +158,6 @@ if [[ ${VERBOSE} -eq 1 ]]; then
   printf "mounting workspace into container: %s\n" "${WORKSPACE_MOUNT}" &>/dev/stderr
 fi
 
-TOOLS_RELDIR="$(realpath "${TOOLS_DIR}" --relative-to="${PWD}")"
-readonly TOOLS_RELDIR
-
 if [[ -n ${CBUILD_IMAGE} ]]; then
   IMAGE_TAGGED=${CBUILD_IMAGE}
 else
@@ -225,25 +187,6 @@ declare -a DOCKER_RUN_ARGS=(
 
 if [[ ${DOCKER_SECCOMP_UNCONFINED} -eq 1 ]]; then
   DOCKER_RUN_ARGS+=("--security-opt=seccomp=unconfined")
-fi
-
-if [[ ${WITH_CMD_PROFILER} -eq 1 ]]; then
-  if [[ ${IMAGE} != build-debian ]]; then
-    printf "error: --cmd-profiler is only compatible with build-debian\n" &>/dev/stderr
-    usage 1
-  fi
-  if [[ -z ${HEAP_PROFILER_FILENAME} ]]; then
-  DOCKER_RUN_ARGS+=(
-    "--env=CMD_PROFILER=LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libprofiler.so"
-    "--env=CPUPROFILE=${CPU_PROFILER_FILENAME}"
-    "--env=CPUPROFILESIGNAL=${CPU_PROFILER_SIGNAL}"
-  )
-  else
-  DOCKER_RUN_ARGS+=(
-    "--env=HEAPPROFILE=${HEAP_PROFILER_FILENAME}"
-    "--env=HEAPPROFILESIGNAL=${HEAP_PROFILER_SIGNAL}"
-  )
-  fi
 fi
 
 # inside the docker build images, /bazel_root is the bazel cache dir, per the system-wide bazelrc
@@ -338,17 +281,10 @@ if [[ ${KEEP_CONTAINER_RUNNING} -eq 1 ]]; then
   else
     DOCKER_RUNNING_CONTAINER="$(long_running_container "${DOCKER_CONTAINER_NAME}")"
     printf "reusing container [%s]\n" "${DOCKER_RUNNING_CONTAINER}" &>/dev/stderr
-    if [[ ${WITH_CMD_PROFILER} -eq 1 ]]; then
-      docker exec \
-        "${DOCKER_EXEC_RUN_ARGS[@]}" \
-        "${DOCKER_RUNNING_CONTAINER}" \
-        /bin/bash -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; env \${CMD_PROFILER} ${CMD:-/bin/sh}"
-    else
-      docker exec \
-        "${DOCKER_EXEC_RUN_ARGS[@]}" \
-        "${DOCKER_RUNNING_CONTAINER}" \
-        /bin/bash -c "${CMD:-/bin/sh}"
-    fi
+    docker exec \
+      "${DOCKER_EXEC_RUN_ARGS[@]}" \
+      "${DOCKER_RUNNING_CONTAINER}" \
+      /bin/bash -c "${CMD:-/bin/sh}"
   fi
 else
   if [[ -z ${CMD} ]]; then
@@ -358,13 +294,6 @@ else
       "${DOCKER_EXEC_RUN_ARGS[@]}" \
       "${IMAGE_TAGGED}" \
       --login
-  elif [[ ${WITH_CMD_PROFILER} -eq 1 ]]; then
-    # shellcheck disable=SC2068
-    docker run \
-      ${DOCKER_RUN_ARGS[@]} \
-      "${DOCKER_EXEC_RUN_ARGS[@]}" \
-      "${IMAGE_TAGGED}" \
-      --login -c "'${TOOLS_RELDIR}'/normalize-bazel-symlinks; env \${CMD_PROFILER} ${CMD}"
   else
     # shellcheck disable=SC2068
     docker run \
